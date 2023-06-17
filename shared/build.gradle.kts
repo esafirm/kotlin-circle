@@ -4,6 +4,11 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.compose")
     id("maven-publish")
+    id("nolambda.circle.publish")
+}
+
+circle {
+    artifactId.set("circle")
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
