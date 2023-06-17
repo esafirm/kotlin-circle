@@ -30,7 +30,7 @@ kotlin {
             baseName = "shared"
         }
     }
-    
+
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -54,6 +54,9 @@ kotlin {
                 api("io.ktor:ktor-client-logging:$ktorVersion")
 
                 api("cafe.adriel.voyager:voyager-navigator:1.0.0-rc05")
+
+                // Workaround as per https://youtrack.jetbrains.com/issue/KT-41821
+                implementation("org.jetbrains.kotlinx:atomicfu:0.18.5")
             }
         }
         val commonTest by getting {
