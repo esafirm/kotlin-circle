@@ -1,4 +1,4 @@
-import nolambda.circle.build.convention.CircleExt
+import nolambda.circle.gradle.convention.CircleExt
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.bundling.Jar
 import org.gradle.kotlin.dsl.`maven-publish`
