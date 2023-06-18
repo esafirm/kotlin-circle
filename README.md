@@ -15,6 +15,22 @@ Not that **convenience** is the priority in this layer.
 **This library is not intended for production usage**. Instead, use the transitive libraries
 directly based on your needs.
 
+## Usage
+
+Set to shared `build.gradle`:
+
+```kotlin
+kotlin {
+	sourceSets {
+		val commonMain by getting {
+			dependencies {
+				implmenetation("io.github.esafirm.circle:circle:0.1.0")
+			}
+		}
+	}
+}
+```
+
 ## License
 
 MIT @ Esa Firman
