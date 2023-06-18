@@ -39,7 +39,7 @@ val javadocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")
 }
 
-val uiBookExt = CircleExt.getOrRegister(project)
+val circleExt = CircleExt.getOrRegister(project)
 
 fun Project.setupPublishing() {
     val base64encodedKey = extra["signing.key"]?.toString()
@@ -71,11 +71,14 @@ fun Project.setupPublishing() {
         // Configure all publications
         publications.withType<MavenPublication> {
 
+            val targetArtifactId = circleExt.artifactId.getOrElse(project.name)
+
             println("Group ID: ${rootProject.group}")
             println("Root project name: ${rootProject.name}")
+            println("Artifact ID: $targetArtifactId")
 
             // Configure the publication
-            artifactId = uiBookExt.artifactId.getOrElse(project.name)
+            artifactId = targetArtifactId
             groupId = rootProject.group.toString()
             version = rootProject.version.toString()
 
@@ -125,5 +128,5 @@ if (enablePublishing.not()) {
     """.trimIndent()
     )
 } else {
-    setupPublishing()
+    afterEvaluate { setupPublishing() }
 }
