@@ -13,6 +13,7 @@ plugins {
 
 private val propToEnvVarList = listOf(
     "circle.enablePublishing" to "ENABLE_PUBLISHING",
+    "circle.releasePublishing" to "PUBLISH_RELEASE",
     "signing.password" to "SIGNING_PASSWORD",
     "signing.key" to "SIGNING_KEY",
     "ossrhUsername" to "OSSRH_USERNAME",
@@ -41,31 +42,42 @@ val javadocJar by tasks.registering(Jar::class) {
 
 val circleExt = CircleExt.getOrRegister(project)
 
-fun Project.setupPublishing() {
+fun PublishingExtension.setupSigning() {
     val base64encodedKey = extra["signing.key"]?.toString()
         ?: error("Signing key is not set. Please check your environment again")
 
     val signingKey = String(Base64.getDecoder().decode(base64encodedKey))
 
+    signing {
+        useInMemoryPgpKeys(
+            signingKey,
+            extra["signing.password"] as String
+        )
+        sign(publishing.publications)
+    }
+}
+
+fun PublishingExtension.setupMavenRepositories() {
+    repositories {
+        maven {
+            name = "sonatype"
+            setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = extra["ossrhUsername"]?.toString() ?: error("ossrh username is not set")
+                password = extra["ossrhPassword"]?.toString() ?: error("ossrh password is not set")
+            }
+        }
+    }
+}
+
+fun Project.setupPublishing() {
+
     publishing {
 
-        signing {
-            useInMemoryPgpKeys(
-                signingKey,
-                extra["signing.password"] as String
-            )
-            sign(publishing.publications)
-        }
-
-        repositories {
-            maven {
-                name = "sonatype"
-                setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-                credentials {
-                    username = extra["ossrhUsername"]?.toString() ?: error("ossrh username is not set")
-                    password = extra["ossrhPassword"]?.toString() ?: error("ossrh password is not set")
-                }
-            }
+        val isLocalPublishing = extra["circle.releasePublishing"] as? String == "true"
+        if (isLocalPublishing) {
+            setupSigning()
+            setupMavenRepositories()
         }
 
         // Configure all publications

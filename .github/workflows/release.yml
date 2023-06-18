@@ -29,6 +29,7 @@ jobs:
           SIGNING_KEY: ${{ secrets.GPG_KEY }}
           SIGNING_PASSWORD: ${{ secrets.GPG_PASSWORD }}
           ENABLE_PUBLISHING: true
+          PUBLISH_RELEASE: true
         run: ./gradlew publishAllPublicationsToSonatypeRepository --stacktrace
 
       - name: Archive artifacts
