@@ -8,3 +8,7 @@ plugins {
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
+
+// Group and version that will be used in the generated POM file
+group = "io.github.esafirm.circle"
+version = "0.1.0"
