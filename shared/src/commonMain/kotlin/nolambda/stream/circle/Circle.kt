@@ -42,7 +42,7 @@ object Circle {
     ) {
         Image(
             painterResource(imageResourceName),
-            null,
+            contentDescription,
             modifier
         )
     }
