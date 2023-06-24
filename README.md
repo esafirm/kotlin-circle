@@ -9,6 +9,7 @@ common usage such as:
 - Storage
 - Image Loading
 - Navigation
+- Multithreading
 
 Not that **convenience** is the priority in this layer.
 
@@ -21,13 +22,13 @@ Set to shared `build.gradle`:
 
 ```kotlin
 kotlin {
-	sourceSets {
-		val commonMain by getting {
-			dependencies {
-				implmenetation("io.github.esafirm.circle:circle:0.1.0")
-			}
-		}
-	}
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implmenetation("io.github.esafirm.circle:circle:0.1.0")
+            }
+        }
+    }
 }
 ```
 

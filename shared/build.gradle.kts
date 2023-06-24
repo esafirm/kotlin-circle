@@ -51,6 +51,7 @@ kotlin {
                 // Image loader
                 api("io.github.qdsfdhvh:image-loader:1.2.10")
 
+                // HTTP Client
                 val ktorVersion = "2.2.4"
                 api("io.ktor:ktor-client-core:$ktorVersion")
                 api("io.ktor:ktor-client-content-negotiation:$ktorVersion")
@@ -58,7 +59,11 @@ kotlin {
                 api("io.ktor:ktor-client-auth:$ktorVersion")
                 api("io.ktor:ktor-client-logging:$ktorVersion")
 
+                // Navigator
                 api("cafe.adriel.voyager:voyager-navigator:1.0.0-rc05")
+
+                // Key Value Storage
+                api("com.russhwolf:multiplatform-settings:1.0.0")
 
                 // Workaround as per https://youtrack.jetbrains.com/issue/KT-41821
                 implementation("org.jetbrains.kotlinx:atomicfu:0.18.5")

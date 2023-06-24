@@ -3,6 +3,8 @@ package nolambda.stream.circle
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.russhwolf.settings.Settings
+import com.russhwolf.settings.set
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -96,6 +98,45 @@ object Circle {
          */
         fun createFixedDispatcher(executorCount: Int) = _createFixedDispatcher(executorCount)
     }
+
+    /**
+     * A persistent key-value storage
+     */
+    class SharedPreference(
+        private val settings: Settings = _getDefaultSettings()
+    ) {
+        fun set(key: String, value: Any) {
+            settings[key] = value
+        }
+
+        fun getInt(key: String): Int? {
+            return settings.getIntOrNull(key)
+        }
+
+        fun getDouble(key: String): Double? {
+            return settings.getDoubleOrNull(key)
+        }
+
+        fun getFloat(key: String): Float? {
+            return settings.getFloatOrNull(key)
+        }
+
+        fun getString(key: String): String? {
+            return settings.getStringOrNull(key)
+        }
+
+        fun getBoolean(key: String): Boolean? {
+            return settings.getBooleanOrNull(key)
+        }
+
+        fun remove(key: String) {
+            settings.remove(key)
+        }
+
+        fun clear() {
+            settings.clear()
+        }
+    }
 }
 
 /* --------------------------------------------------- */
@@ -109,4 +150,4 @@ private val DEFAULT_TOKEN_PROVIDER: () -> String = { "" }
  */
 internal expect fun _createFixedDispatcher(executorCount: Int): CoroutineDispatcher
 
-
+internal expect fun _getDefaultSettings(): Settings
