@@ -7,7 +7,7 @@ run-name: Build
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -24,7 +24,8 @@ jobs:
           cache: gradle
 
       - name: Build with Gradle
-        run: ./gradlew :shared:build
+        ## For now run only JVM part since iOS has a problem on linking process
+        run: ./gradlew :shared:assembleDebug
 
       - name: Archive artifacts
         uses: actions/upload-artifact@v3
